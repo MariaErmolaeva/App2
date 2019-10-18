@@ -31,7 +31,6 @@ namespace App2
 
     }
 
-
     public class Archer: Characters
     {
         private int distanceAtack;
@@ -46,18 +45,25 @@ namespace App2
 
     public class Mage: Characters
     {
-        private int levelSave;
-        private int power;
+        private int levelIntelligence;
+        private int distanceAtack;
 
-        public Mage(string name, int age, Race race, int levelSave, int power) : base (name,age,race)
+        public Mage(string name, int age, Race race, int levelIntelligence, int distanceAtack) : base (name,age,race)
         {
-            this.levelSave = levelSave;
-            this.power = power;
+            this.levelIntelligence = levelIntelligence;
+            this.distanceAtack = distanceAtack;
         }
     }
 
     public class Warrior: Characters
     {
+        private int levelSave;
+        private int power;
 
+        public Warrior(string name, int age, Race race, int levelSave, int power) : base (name,age,race)
+        {
+            this.levelSave = levelSave;
+            this.power = power;
+        }
     }
 }
