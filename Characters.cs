@@ -9,10 +9,10 @@ namespace App2
 
     public enum Race
     {
-        human = 1,
-        orc = 2,
-        elf = 3,
-        animal = 4
+        Human,
+        Orc,
+        Elf,
+        Animal
     }
 
     public class Characters
@@ -39,14 +39,21 @@ namespace App2
 
         public Archer (string name, int age, Race race, int distanceAtack, int levelAgility) : base (name, age, race)
         {
-            distanceAtack = 100;
-            levelAgility = 10;
+            this.distanceAtack = distanceAtack;
+            this.levelAgility = levelAgility;
         }
     }
 
     public class Mage: Characters
     {
+        private int levelSave;
+        private int power;
 
+        public Mage(string name, int age, Race race, int levelSave, int power) : base (name,age,race)
+        {
+            this.levelSave = levelSave;
+            this.power = power;
+        }
     }
 
     public class Warrior: Characters
