@@ -24,9 +24,9 @@ namespace App2
 
         public Characters(string name, int age, Race race)
         {
-            name = null;
-            age = 0;
-            race = Race.human;
+            this.name = name;
+            this.age = age;
+            this.race = race;
         }
 
     }
@@ -37,7 +37,7 @@ namespace App2
         private int distanceAtack;
         private int levelAgility;
 
-        public Archer (int distanceAtack, int levelAgility) : base (name, age, race)
+        public Archer (string name, int age, Race race, int distanceAtack, int levelAgility) : base (name, age, race)
         {
             distanceAtack = 100;
             levelAgility = 10;
