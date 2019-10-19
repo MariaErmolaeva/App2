@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App2
 {
-    class Archer
+    public class Archer: Characters
     {
+        private int distanceAtack;
+        private int levelAgility;
+
+        public int distanceAt { get { return distanceAtack; } }
+
+        public int lvlAgility { get { return levelAgility; } }
+
+        public Archer(string name, int age, Race race, int distanceAtack, int levelAgility) : base(name, age, race)
+        {
+            this.distanceAtack = distanceAtack;
+            this.levelAgility = levelAgility;
+        }
     }
 }
