@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace App2
 {
     public class Presenter
     {
-        IMainView mainview;
-        IAction action;
+        private IMainView mainview;
+        private IAction action;
+
 
         public Presenter (IAction action)
         {
@@ -22,20 +24,32 @@ namespace App2
         }
 
 
-        public void Run (Characters characters)
+        public string Run (Characters characters)
         {
-            action.Run(100, characters);
-            //mainview.OnSuccessRun();
+            characters.timeSetGet = action.Run(100, characters);
+            return mainview.OnSuccessRun(characters);
         }
 
-        public void Attack(Characters characters)
+        public string Attack(Characters characters)
         {
-            action.Attack(characters);
+            characters.attackSetGet = action.Attack(characters);
+            return mainview.OnSuccessAttack(characters);
         }
 
-        public void Health(Characters characters)
+        public string Health(Characters characters)
         {
-            action.Health(characters);
+            characters.healthSetGet = action.Health(characters);
+            return mainview.OnSuccessHealth(characters);
+        }
+
+        public string AddCharacters(string name, string race, string type, List<Characters> characters)
+        {
+
+            action.CreateCharacters(name, race,type, characters);
+
+           return mainview.OnSuccessAddCharacters(characters.Last());
+ 
+
         }
 
     }
