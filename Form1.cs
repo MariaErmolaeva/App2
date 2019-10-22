@@ -2,68 +2,121 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace App2
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form, IMainView
     {
-        Presenter presentor;
-        List<Characters> characters;
+
+        public event EventHandler AttackClick;
+        public event EventHandler RunClick;
+        public event EventHandler HealthClick;
+        public event EventHandler CreateCharactersClick;
+
+
+        public int index
+        {
+            get
+            {
+                if (listBox1.SelectedIndex != -1)
+                    return listBox1.SelectedIndex;
+                else
+                    return 0;
+            }
+        }
+
+        public string nameCharacters
+        {
+            get
+            {
+                if (name.Text != null)
+                    return name.Text;
+                else
+                    return null;
+            }
+        }
+
+        public string race
+        {
+            get
+            {
+                if (comboBox1.Text != null)
+                    return comboBox1.Text;
+                else
+                    return null;
+            }
+        }
+
+        public string type
+        {
+            get
+            {
+                if (comboBox2.Text != null)
+                    return comboBox2.Text;
+                else
+                    return null;
+            }
+
+        }
 
         public Form1()
         {
             InitializeComponent();
-            presentor = new Presenter(new Action());
-            characters = new List<Characters>();
-
-            presentor.MainView(new MainView());
         }
 
-        private void Attack_Click(object sender, EventArgs e)
+
+        void addCharacters_Click(object sender, EventArgs e)
         {
-            if (listBox1.SelectedIndex != null)
-            {
-                mainText.Text += presentor.Attack(characters[listBox1.SelectedIndex]);
-            }
-            else
-                MessageBox.Show("Выберите персонажа из списка персонажей");
-
+            if (CreateCharactersClick != null)
+                CreateCharactersClick(this, EventArgs.Empty);
         }
 
-        private void addCharacters_Click(object sender, EventArgs e)
+        void Attack_Click(object sender, EventArgs e)
         {
-            presentor.AddCharacters(name.Text, comboBox1.Text, comboBox2.Text, characters);
-
-            int count = characters.Count;
-            listBox1.Items.Add(characters.Last().nameGet + ": ");
-
+            if (AttackClick != null)
+                AttackClick(this, EventArgs.Empty);
         }
 
-
-        private void run_Click(object sender, EventArgs e)
+        void run_Click(object sender, EventArgs e)
         {
-            if (listBox1.SelectedIndex != null)
-            {
-                mainText.Text += presentor.Run(characters[listBox1.SelectedIndex]);
-            }
-            else
-                MessageBox.Show("Выберите персонажа из списка персонажей");
+            if (RunClick != null)
+                RunClick(this, EventArgs.Empty);
         }
 
-        private void health_Click(object sender, EventArgs e)
+        void health_Click(object sender, EventArgs e)
         {
-            if (listBox1.SelectedIndex != null)
-            {
-                mainText.Text += presentor.Health(characters[listBox1.SelectedIndex]);
-            }
-            else
-                MessageBox.Show("Выберите персонажа из списка персонажей");
+            if (HealthClick != null)
+                HealthClick(this, EventArgs.Empty);
         }
+
+
+        public void OnSuccessRun(Characters characters)
+        {
+            MessageBox.Show("Успешный забег");
+            mainText.Text += characters.nameGet + " пробежит за " + characters.timeSetGet + " часа";
+        }
+
+        public void OnSuccessAttack(Characters characters)
+        {
+            MessageBox.Show("Успешная атака");
+            mainText.Text += characters.nameGet + " атакует на " + characters.attackSetGet + " XP";
+        }
+
+        public void OnSuccessHealth(Characters characters)
+        {
+            MessageBox.Show("Успешное лечение");
+            mainText.Text += characters.nameGet + " вылечится на " + characters.attackSetGet + " XP";
+        }
+
+        public void OnSuccessCreateCharacters(Characters characters)
+        {
+            MessageBox.Show("Персонаж добавлен");
+            listBox1.Items.Add(characters.nameGet);
+        }
+
 
 
     }
