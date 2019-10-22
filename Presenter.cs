@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace App2
@@ -12,43 +10,82 @@ namespace App2
         private IMainView mainview;
         private IAction action;
 
+        List<Characters> characters;
 
-        public Presenter (IAction action)
+
+        public Presenter(IAction action, IMainView mainview)
         {
+            characters = new List<Characters>();
+
             this.action = action;
-        }
-
-        public void MainView (IMainView mainview)
-        {
             this.mainview = mainview;
+
+            mainview.AttackClick += mainview_AttackClick;
+            mainview.CreateCharactersClick += mainview_CreateCharactersClick;
+            mainview.HealthClick += mainview_HealthClick;
+            mainview.RunClick += mainview_RunClick;
         }
 
-
-        public string Run (Characters characters)
+        void mainview_RunClick(object sender, EventArgs e)
         {
-            characters.timeSetGet = action.Run(100, characters);
-            return mainview.OnSuccessRun(characters);
+            try
+            {
+
+            }
+            catch
+            {
+            }
         }
 
-        public string Attack(Characters characters)
+        void mainview_HealthClick(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void mainview_CreateCharactersClick(object sender, EventArgs e)
+        {
+            try
+            {
+                action.CreateCharacters(mainview.nameCharacters, mainview.race, mainview.type, characters);
+                mainview.OnSuccessCreateCharacters(characters[mainview.index]);
+            }
+            catch
+            {
+                MessageBox.Show("Неудачно");
+            }
+        }
+
+        private void mainview_AttackClick(object sender, EventArgs e)
+        {
+            try
+            {
+                characters[mainview.index].timeSetGet = action.Run(100, characters[mainview.index]);
+                mainview.OnSuccessAttack(characters[mainview.index]);
+            }
+            catch
+            {
+                MessageBox.Show("Неудачно");
+            }
+        }
+
+
+
+        public void Attack(Characters characters)
         {
             characters.attackSetGet = action.Attack(characters);
-            return mainview.OnSuccessAttack(characters);
         }
 
-        public string Health(Characters characters)
+        public void Health(Characters characters)
         {
             characters.healthSetGet = action.Health(characters);
-            return mainview.OnSuccessHealth(characters);
+
         }
 
-        public string AddCharacters(string name, string race, string type, List<Characters> characters)
+        public void AddCharacters(string name, string race, string type, List<Characters> characters)
         {
 
-            action.CreateCharacters(name, race,type, characters);
+            action.CreateCharacters(name, race, type, characters);
 
-           return mainview.OnSuccessAddCharacters(characters.Last());
- 
 
         }
 
