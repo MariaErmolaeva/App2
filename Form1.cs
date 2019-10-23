@@ -24,7 +24,7 @@ namespace App2
                 if (listBox1.SelectedIndex != -1)
                     return listBox1.SelectedIndex;
                 else
-                    return 0;
+                    return -1;
             }
         }
 
